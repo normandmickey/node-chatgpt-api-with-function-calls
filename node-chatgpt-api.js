@@ -5,6 +5,14 @@ const axios = require("axios");    // For making HTTP requests.
 const moment = require("moment-timezone");
 
 
+(async () => {
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+    weatherApiKey: process.env.WEATHER_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+
+
 // Define a function called lookupTime that takes a location as a parameter and returns the current time in that location. 
 // The function makes a GET request to the World Time API, extracts the current time from the response, and formats it.
 async function lookupTime(location) {
@@ -31,7 +39,7 @@ async function lookupWeather(location) {
       days: '3'
     },
     headers: {
-      'X-RapidAPI-Key': 'ZgGq56dpkdmshZlB9Ant8SNhTM8zp1WxIOqjsnKl2ObvuIYFj6',
+      'X-RapidAPI-Key': process.env.WEATHER_API_KEY,
     '  X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
     }
   };
@@ -49,13 +57,6 @@ async function lookupWeather(location) {
     return "No forecast found";
   }
 }
-
-
-(async () => {
-  const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
 
   const history = [];
 
