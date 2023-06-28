@@ -8,7 +8,6 @@ const moment = require("moment-timezone");
 (async () => {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
-    weatherApiKey: process.env.WEATHER_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
 
@@ -39,7 +38,7 @@ async function lookupWeather(location) {
       days: '3'
     },
     headers: {
-      'X-RapidAPI-Key': process.env.WEATHER_API_KEY,
+      'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
     '  X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
     }
   };
