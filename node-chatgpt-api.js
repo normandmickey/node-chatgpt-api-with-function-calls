@@ -111,7 +111,9 @@ async function lookupWeather(location) {
       const completionResponse = completion.data.choices[0].message;
       //console.log(completionResponse);
 
-      if(!completionResponse.content) {
+      // if the response from ChatGPT does not have content, then it returned the JSON for one of the function calls. We need
+      // to figure out which one it was and run it to get the appropriate API response. 
+      if(!completionResponse.content) { 
         const functionCallName = completionResponse.function_call.name;
         //console.log("functionCallName: ", functionCallName);
 
