@@ -18,4 +18,4 @@ For example, "Whats the weather forecast for Las Vegas Nevada?" should return so
 
 But when you ask "What time is it in Rio De Janeiro?", you should get the current time in Rio. (From the worldtimeapi.org API.)
 
-As you can see OpenAI's API is used to generate the API call, it's still up to you to run it and parse the responses.  Instead of immediately returning data from the API to the user, you could append the AP response to a second call to ChatGPT as context to answer the original question. 
+As you can see OpenAI's API is used to generate the API call, it's still up to you to run it and parse the responses.  Instead of immediately returning data from the API to the user, you could append the AP response to a second call to ChatGPT giving it context to answer the original question. 
