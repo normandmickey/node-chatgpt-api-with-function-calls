@@ -26,7 +26,7 @@ async function lookupTime(location) {
     }
 }
 
-// Define a function called lookupTime that takes a location as a parameter and returns the weather forecatst in that location. 
+// Define a function called lookupWeather that takes a location as a parameter and returns the weather forecatst in that location. 
 // The function makes a GET request to the WeatherAPI API, extracts the current temperature from the response, and formats it.
 async function lookupWeather(location) {
 
