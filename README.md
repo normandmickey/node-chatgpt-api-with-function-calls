@@ -1,6 +1,6 @@
 # node-chatgpt-api-with-function-calls
 
-This is a demonstration of how to integrate function calls with the OpenAI API (ChatGPT), NodeJS, RapidApi.com and WorldTimeAPI.org. 
+This is a demonstration to show how to integrate function calls with the OpenAI API (ChatGPT), NodeJS, RapidApi.com and WorldTimeAPI.org. 
 
 1. Clone this repository `git clone https://github.com/normandmickey/node-chatgpt-api-with-function-calls.git`. 
 2. Change to the node-chatgpt-with-functon-calls directory. 
