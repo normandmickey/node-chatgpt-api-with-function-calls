@@ -26,6 +26,30 @@ async function lookupTime(location) {
     }
 }
 
+// Define a function called sendEmail 
+async function sendEmail(to, from, subject, text) {
+  const sgMail = require('@sendgrid/mail')
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+  const sendGMsg = ""
+  const msg = {
+    to: to, // Change to your recipient
+    from: from, // Change to your verified sender
+    subject: subject, 
+    text: text //body of the email
+  }
+  sgMail
+    .send(msg)
+    .then(() => {
+      // console.log('Email sent')
+      const sendGMsg = "Email Sent";
+    })
+    .catch((error) => {
+      //console.error(error)
+      const sendGMsg = "message not sent";
+  })
+  return sendGMsg;
+}
+
 // Define a function called lookupWeather that takes a location as a parameter and returns the weather forecatst in that location. 
 // The function makes a GET request to the WeatherAPI API, extracts the current temperature from the response, and formats it.
 async function lookupWeather(location) {
@@ -49,7 +73,7 @@ async function lookupWeather(location) {
     let weather = response.data;
     const currentTemp = weather.current.temp_f;
     //console.log(currentTemp);
-    const weatherForecast = `The current temp is ${currentTemp}.`;
+    const weatherForecast = `The weather forecast is ${currentTemp}.`;
     return weatherForecast;
   } catch (error) {
 	  console.error(error);
@@ -76,19 +100,45 @@ async function lookupWeather(location) {
         messages: messages,
         functions: [
             {
-                name: "lookupTime",
-                description: "get the current time in a given location",
+                name: "sendEmail",
+                description: "send an email to specified address",
                 parameters: {
                     type: "object", // specify that the parameter is an object
                     properties: {
-                        location: {
+                        to: {
                             type: "string", // specify the parameter type as a string
-                            description: "The location, e.g. Beijing, China. But it should be written in a timezone name like Asia/Shanghai"
+                            description: "The recipients email address."
+                        },
+                        from: {
+                          type: "string", // specify the parameter type as a string
+                          description: "The senders email address, default to nmoore@lightninginabox.co"
+                        },
+                        subject: {
+                          type: "string", // specify the parameter type as a string
+                          description: "The subject of the email."
+                        },
+                        text: {
+                          type: "string", // specify the parameter type as a string
+                          description: "The text or body of the email message."
                         }
                     },
-                    required: ["location"] // specify that the location parameter is required
+                    required: ["to","from","subject","text"] // specify that the location parameter is required
                 }
             },
+            {
+              name: "lookupTime",
+              description: "get the current time in a given location",
+              parameters: {
+                  type: "object", // specify that the parameter is an object
+                  properties: {
+                      location: {
+                          type: "string", // specify the parameter type as a string
+                          description: "The location, e.g. Beijing, China. But it should be written in a timezone name like Asia/Shanghai"
+                      }
+                  },
+                  required: ["location"] // specify that the location parameter is required
+              }
+          },
             {
               name: "lookupWeather",
               description: "get the weather forecast in a given location",
@@ -111,8 +161,8 @@ async function lookupWeather(location) {
       const completionResponse = completion.data.choices[0].message;
       //console.log(completionResponse);
 
-      // if the response from ChatGPT does not have content, then it returned the JSON for one of the function calls. We need
-      // to figure out which one it was and run it to get the appropriate API response. 
+      // if the response from ChatGPT does not have content, then it returned the JSON for one of the function calls. 
+      // We then need to figure out which function it created then run it to get the appropriate API response. 
       if(!completionResponse.content) { 
         const functionCallName = completionResponse.function_call.name;
         //console.log("functionCallName: ", functionCallName);
@@ -124,14 +174,38 @@ async function lookupWeather(location) {
             const completion_text = await lookupTime(completionArguments.location);
             history.push([user_input, completion_text]);
             console.log(completion_text);
+        } else if(functionCallName === "sendEmail") {
+          const completionArguments = JSON.parse(completionResponse.function_call.arguments);
+          console.log("completionArguments: ", completionArguments);
+
+          const completion_text = await sendEmail(completionArguments.to, completionArguments.from, completionArguments.subject, completionArguments.text);
+          history.push([user_input, completion_text]);          
+          console.log("Email sent: " + completionArguments.to + "\n" + "Subject: " + completionArguments.subject + "\n" + "Body: " + completionArguments.text);
         } else if(functionCallName === "lookupWeather") {
             const completionArguments = JSON.parse(completionResponse.function_call.arguments);
             //console.log("completionArguments: ", completionArguments);
 
             const completion_text = await lookupWeather(completionArguments.location);
             history.push([user_input, completion_text]);
-            console.log(completion_text);
-
+            messages.push({ role: "user", content: "Summarize the following input." + completion_text });
+            try {
+              const completion = await openai.createChatCompletion({
+                model: "gpt-3.5-turbo-0613",
+                messages: messages
+              });
+              
+              // Extract the generated completion from the OpenAI API response.
+              const completionResponse = completion.data.choices[0].message.content;
+              //console.log(messages);
+              console.log(completionResponse);            
+            } catch (error) {
+              if (error.response) {
+                console.log(error.response.status);
+                console.log(error.response.data);
+              } else {
+                console.log(error.message);
+              }n
+            }
         }
     } else {
         const completion_text = completion.data.choices[0].message.content;
@@ -154,6 +228,7 @@ async function lookupWeather(location) {
         console.log(error.response.data);
       } else {
         console.log(error.message);
+        console.log(messages);
       }
     }
   }

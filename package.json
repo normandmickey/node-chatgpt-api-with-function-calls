@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
     "moment-timezone": "^0.5.43",
