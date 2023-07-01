@@ -1,6 +1,6 @@
 # node-chatgpt-api-with-function-calls
 
-This is a demonstration to show how to integrate function calls with the OpenAI API (ChatGPT), NodeJS, RapidApi.com and WorldTimeAPI.org. 
+This is a demonstration to show how to integrate function calls with the OpenAI API (ChatGPT), NodeJS using RapidApi.com, WorldTimeAPI.org and SendGrid. 
 
 1. Clone this repository `git clone https://github.com/normandmickey/node-chatgpt-api-with-function-calls.git`. 
 2. Change to the node-chatgpt-with-functon-calls directory. 
@@ -10,7 +10,7 @@ This is a demonstration to show how to integrate function calls with the OpenAI 
 6. Add your X-RapidAPI-Key to your .env file. 
 7. Register and obtain an API key from https://sendgrid.com
 8. Add your SendGrid API key to the .env file and update SENDER_EMAIL.
-8. Run the following command `node node-chatgpt-js`
+9. Run the following command `node node-chatgpt-js`
 
 The script will return normal responses to your prompts using OpenAI's Chat Completion endpoint but also has access to three API's.   
 
@@ -18,8 +18,6 @@ The script will return normal responses to your prompts using OpenAI's Chat Comp
 
 2. WorldTimeAPI.org - When you ask "What time is it in Rio De Janeiro?", you should get the current time in Rio. (from worldtimeapi.org).
 
-3. SendGrid - You can ask ChatGPT to send an email, for exemple 
+3. SendGrid - You can also ask ChatGPT to send an email, for example "Send an email to me@mydomain.com asking when will the report on global climate change be ready?" 
 
-
-
-As you can see OpenAI's API is used to generate the API call, it's still up to you to run it and parse the responses.  Instead of immediately returning data from the API to the user, you could append the API response to a second call to ChatGPT giving it context to answer the original question. 
+As you can see the OpenAI API is used to generate the API call only when necessary but it's still up to you to run it and parse the responses.  Instead of immediately returning data from the API to the user, you can also append the API response to a second call to ChatGPT giving it context to answer the original question. 
