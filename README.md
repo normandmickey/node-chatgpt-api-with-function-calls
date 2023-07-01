@@ -1,6 +1,6 @@
 # node-chatgpt-api-with-function-calls
 
-This is a demonstration to show how to integrate function calls with the OpenAI API (ChatGPT), NodeJS using RapidApi.com, WorldTimeAPI.org and SendGrid. 
+This is a demonstration to show how to integrate function calls with the OpenAI API (ChatGPT) and NodeJS using RapidApi.com, WorldTimeAPI.org and SendGrid. 
 
 1. Clone this repository `git clone https://github.com/normandmickey/node-chatgpt-api-with-function-calls.git`. 
 2. Change to the node-chatgpt-with-functon-calls directory. 
@@ -20,4 +20,4 @@ The script will return normal responses to your prompts using OpenAI's Chat Comp
 
 3. SendGrid - You can also ask ChatGPT to send an email, for example "Send an email to me@mydomain.com asking when will the report on global climate change be ready?" 
 
-As you can see in the sample code the OpenAI API is used to generate API calls when necessary however, it's still up to you to run them,  parse the responses and either return the response directly or use it in another function.  For example, instead of immediately returning data from the API to the user, you can also append the API response to a second call to ChatGPT giving it context to answer the original question. 
+As you can see in the sample code the OpenAI API is used to generate API calls if necessary. Howerver, it's still up to you to run them,  parse the responses and either return the response directly to the use or use it's data in another function.  For example, instead of immediately returning data from the API to the user, you can also append the API response to a second call to ChatGPT giving it context to answer the original question. 
