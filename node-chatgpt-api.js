@@ -85,6 +85,7 @@ async function lookupWeather(location) {
 
   while (true) {
     const user_input = readlineSync.question("Your input: ");
+    const senderEmail = process.env.SENDER_EMAIL;
 
     const messages = [];
     for (const [input_text, completion_text] of history) {
@@ -111,7 +112,7 @@ async function lookupWeather(location) {
                         },
                         from: {
                           type: "string", // specify the parameter type as a string
-                          description: "The senders email address, default to nmoore@lightninginabox.co"
+                          description: `The senders email address, default to ${senderEmail}`
                         },
                         subject: {
                           type: "string", // specify the parameter type as a string
