@@ -177,7 +177,7 @@ async function lookupWeather(location) {
             console.log(completion_text);
         } else if(functionCallName === "sendEmail") {
           const completionArguments = JSON.parse(completionResponse.function_call.arguments);
-          console.log("completionArguments: ", completionArguments);
+          // console.log("completionArguments: ", completionArguments);
 
           const completion_text = await sendEmail(completionArguments.to, completionArguments.from, completionArguments.subject, completionArguments.text);
           history.push([user_input, completion_text]);          
