@@ -20,4 +20,4 @@ The script will return normal responses to your prompts using OpenAI's Chat Comp
 
 3. SendGrid - You can also ask ChatGPT to send an email, for example "Send an email to me@mydomain.com asking when will the report on global climate change be ready?" 
 
-As you can see the OpenAI API is used to generate the API call only when necessary but it's still up to you to run it and parse the responses.  Instead of immediately returning data from the API to the user, you can also append the API response to a second call to ChatGPT giving it context to answer the original question. 
+As you can see in the sample code the OpenAI API is used to generate API calls when necessary however, it's still up to you to run them,  parse the responses and either return the response directly or use it in another function.  For example, instead of immediately returning data from the API to the user, you can also append the API response to a second call to ChatGPT giving it context to answer the original question. 
