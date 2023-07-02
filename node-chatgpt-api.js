@@ -73,7 +73,11 @@ async function lookupWeather(location) {
     let weather = response.data;
     //const currentTemp = weather.current.temp_f;
     //console.log(currentTemp);
-    const weatherForecast = `Location: ${weather.location.name} Current Temperature: ${weather.current.temp_f} Condition: ${weather.current.condition.text}. Low Today: ${weather.forecast.forecastday[0].day.mintemp_f} High Today: ${weather.forecast.forecastday[0].day.maxtemp_f}`;
+    const weatherForecast = `Location: ${weather.location.name} \
+    Current Temperature: ${weather.current.temp_f} \
+    Condition: ${weather.current.condition.text}. \
+    Low Today: ${weather.forecast.forecastday[0].day.mintemp_f} \
+    High Today: ${weather.forecast.forecastday[0].day.maxtemp_f}`;
     return weatherForecast;
   } catch (error) {
 	  console.error(error);
