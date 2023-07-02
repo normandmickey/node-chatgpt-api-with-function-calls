@@ -71,9 +71,9 @@ async function lookupWeather(location) {
 	  const response = await axios.request(options);
 	  //console.log(response.data);
     let weather = response.data;
-    const currentTemp = weather.current.temp_f;
+    //const currentTemp = weather.current.temp_f;
     //console.log(currentTemp);
-    const weatherForecast = `The weather forecast is ${currentTemp}.`;
+    const weatherForecast = `Location: ${weather.location.name} Current Temperature: ${weather.current.temp_f} Condition: ${weather.current.condition.text}. Low Today: ${weather.forecast.forecastday[0].day.mintemp_f} High Today: ${weather.forecast.forecastday[0].day.maxtemp_f}`;
     return weatherForecast;
   } catch (error) {
 	  console.error(error);
@@ -182,6 +182,7 @@ async function lookupWeather(location) {
           const completion_text = await sendEmail(completionArguments.to, completionArguments.from, completionArguments.subject, completionArguments.text);
           history.push([user_input, completion_text]);          
           console.log("Email sent: " + completionArguments.to + "\n" + "Subject: " + completionArguments.subject + "\n" + "Body: " + completionArguments.text);
+        
         } else if(functionCallName === "lookupWeather") {
             const completionArguments = JSON.parse(completionResponse.function_call.arguments);
             //console.log("completionArguments: ", completionArguments);
